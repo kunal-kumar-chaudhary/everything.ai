@@ -68,7 +68,7 @@ export async function POST(request: Request) {
     return Response.json(
       {
         success: false,
-        message: err.message,
+        message: err instanceof Error ? err.message : 'An unknown error occurred',
       },
       {
         status: 500,

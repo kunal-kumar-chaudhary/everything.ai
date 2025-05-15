@@ -1,4 +1,19 @@
-export interface ApiResponse{
-    success: boolean,
-    message: string
+export interface ApiResponse {
+  success: boolean;
+  message: string;
+}
+
+// defining type for user to be used with authentication context
+export interface User {
+  id: string;
+  username: string;
+  email: string;
+  role: string;
+}
+
+// defining type for AuthContext
+export interface AuthContextType {
+  user: User | null;
+  isLoading: boolean;
+  logout: () => Promise<void>;
 }

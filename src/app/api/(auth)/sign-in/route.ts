@@ -3,6 +3,7 @@ import dbConnect from "@/lib/dbConnect";
 import { signinSchema } from "@/schemas/signinSchema";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 export async function POST(request: Request) {
   // db connection
@@ -65,10 +66,22 @@ export async function POST(request: Request) {
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
       expiresIn: "1h",
     });
+
+    (await cookies()).set({
+      name: "token",
+      value: token,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60, // 1 hour
+      path: "/",
+      sameSite: "strict"
+    })
+
     return Response.json(
       {
         success: true,
         message: "login successful",
+        payload,
         token,
       },
       {
