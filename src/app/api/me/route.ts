@@ -8,8 +8,10 @@ export async function GET(request: Request) {
   await dbConnect();
 
   try {
-    const cookieStore = cookies();
-    const token = (await cookieStore).get("token")?.value;
+    const cookieStore = await cookies();
+    
+    const token = cookieStore.get("token")?.value;
+    console.log("Token from cookies:", token);
     if (!token) {
       return Response.json(
         {
@@ -34,7 +36,6 @@ export async function GET(request: Request) {
         { status: 404 }
       );
     }
-
     return Response.json(
       {
         success: true,

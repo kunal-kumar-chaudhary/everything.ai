@@ -15,5 +15,13 @@ export interface User {
 export interface AuthContextType {
   user: User | null;
   isLoading: boolean;
+  login: (data: unknown) => Promise<unknown>,
   logout: () => Promise<void>;
+}
+
+
+export interface LoginResponse {
+    success: boolean;
+    message?: string;
+    payload?: object;
 }

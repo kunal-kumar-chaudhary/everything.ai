@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       role: user.role,
       isVerified: user.isVerified,
     };
-    
+
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
       expiresIn: "1h",
     });
@@ -74,29 +74,27 @@ export async function POST(request: Request) {
       secure: process.env.NODE_ENV === "production",
       maxAge: 60 * 60, // 1 hour
       path: "/",
-      sameSite: "strict"
-    })
+      sameSite: "strict",
+    });
 
     return Response.json(
       {
         success: true,
         message: "login successful",
         payload,
-        token,
       },
       {
         status: 200,
       }
     );
   } catch (err) {
+    console.error("Sign-in error:", err);
     return Response.json(
       {
         success: false,
-        message: "error signin in...",
+        message: err instanceof Error ? err.message : "Error signing in",
       },
-      {
-        status: 404,
-      }
+      { status: 500 }
     );
   }
 }

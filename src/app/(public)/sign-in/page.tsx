@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { signinSchema } from "@/schemas/signinSchema";
 import { Loader2 } from "lucide-react";
+
 import {
   Form,
   FormControl,
@@ -17,9 +18,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import axios from "axios";
+import { useAuth } from "@/app/contexts/AuthContext";
+import { LoginResponse } from "@/types/ApiResponse";
 
 const Page = () => {
+  const { login } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof signinSchema>>({
@@ -31,25 +34,24 @@ const Page = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof signinSchema>) => {
-    try {
-      setIsSubmitting(true);
-      const response = await axios.post(`/api/sign-in`, data);
-      const userData = await response.data;
-      localStorage.setItem("userData", JSON.stringify(userData.payload)); // Store user data
-      if(userData.success===false){
-        toast("something wrong with your password or username...")
-      }
-      if(userData.success===true){
-        router.replace("/home"); 
-      }
-    } catch (err) {
-      setIsSubmitting(false);
-      toast("something went wrong...")
+  try {
+    setIsSubmitting(true);
+    const response = await login(data);
+    console.log("Login response in page:", response);
+    
+    if (response.success) {
+      console.log("Login successful, redirecting to /home");
+      router.push("/home");
+    } else {
+      toast(response.message || "Failed to sign in");
     }
-    finally{
-      setIsSubmitting(false);
-    }
-  };
+  } catch (err) {
+    console.error("Submit error:", err);
+    toast("Something went wrong...");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
