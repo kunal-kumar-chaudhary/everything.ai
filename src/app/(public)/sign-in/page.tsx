@@ -19,7 +19,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/app/contexts/AuthContext";
-import { LoginResponse } from "@/types/ApiResponse";
 
 const Page = () => {
   const { login } = useAuth();
@@ -52,6 +51,8 @@ const Page = () => {
     setIsSubmitting(false);
   }
 };
+
+const repsolbed  = await login(data);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
