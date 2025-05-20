@@ -18,6 +18,7 @@ export interface Message extends Document {
     completionTokens?: number;
     totalTokens?: number;
     processingTime?: number;
+    isCompletion?: boolean;
   };
 }
 

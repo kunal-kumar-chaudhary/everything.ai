@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { number } from "zod";
 
 // defining user interface
 interface User extends Document {
@@ -11,6 +12,11 @@ interface User extends Document {
   verify_code: string;
   verifyCodeExpiry: Date;
   role: "USER" | "ADMIN";
+  usage: {
+    totalTokens: number;
+    monthlyToken: number;
+    lastReset: Date;
+  }
 }
 
 // preparing shchema of the user model
@@ -60,6 +66,20 @@ const UserSchema: Schema<User> = new Schema({
     enum: ["USER", "ADMIN"], // restricting to USER or ADMIN
     default: "USER", // defaulting to user
   },
+  usage: {
+    totalTokens: {
+      type: Number,
+      default: 0
+    },
+    monthlyToken: {
+      type: Number,
+      default: 0
+    },
+    lastReset: {
+      type: Date,
+      default: Date.now
+    }
+  }
 });
 
 // mongoose middleware to update the "updatedAt" field

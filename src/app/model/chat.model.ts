@@ -5,7 +5,7 @@ export interface Chat extends Document{
     createdAt: Date;
     updatedAt: Date; 
     lastMessage?: Types.ObjectId; // reference to the last message
-    model?: string;
+    chatModel?: string;
     systemPrompt?: string;
     messageCount: number;
 }
@@ -33,7 +33,7 @@ const ChatSchema: Schema<Chat> = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Message",
     },
-    model: {
+    chatModel: {
         type: String,
         default: "gpt-4", // Default model
     },
