@@ -1,16 +1,20 @@
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router'
-import React from 'react'
+"use client";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
-const ProtectedLayout = ({children}: {children:React.ReactNode}) => {
-    const router = useRouter();
-    const pathname = usePathname();
+const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
 
-  return (
-    <>
-    {children}
-    </>
-  )
-}
+  useEffect(() => {
+    // Only redirect if the auth check is complete (isLoading is false) and user is null
+    if (!isLoading && !user) {
+      router.push("/sign-in");
+    }
+  }, [user, isLoading, router]);
 
-export default ProtectedLayout
+  return <>{children}</>;
+};
+
+export default ProtectedLayout;

@@ -25,3 +25,20 @@ export interface LoginResponse {
     message?: string;
     payload?: object;
 }
+
+export interface Message {
+  chatId: string;
+  role: "user"|"assistant";
+  content: string;
+  createdAt: string;
+  tokens: number;
+}
+
+export interface Chat {
+  _id: string;
+  title: string;
+  userId: string;
+  lastMessage: string;
+  updatedAt: string;
+  totalTokens: number;
+}
