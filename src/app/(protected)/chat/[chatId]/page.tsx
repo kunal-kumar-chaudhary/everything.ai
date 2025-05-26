@@ -16,9 +16,8 @@ const page = ({ params }: { params: Promise<{ chatId: string }> }) => {
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const response = await axios.get(`/api/chats/${user?.id}`);
-        const data = response.data;
-        setChats(data);
+        const response = await axios.get(`/api/all-chats/${user?.id}`);
+        setChats(response.data);
       } catch (err) {
         console.log("error fetching chats..");
       }

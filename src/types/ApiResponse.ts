@@ -35,10 +35,8 @@ export interface Message {
 }
 
 export interface Chat {
-  _id: string;
   title: string;
   userId: string;
   lastMessage: string;
   updatedAt: string;
-  totalTokens: number;
 }
