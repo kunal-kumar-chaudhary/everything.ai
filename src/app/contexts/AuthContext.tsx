@@ -40,8 +40,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (response.data.success) {
           const serverUser = response.data.user;
-          console.log("AuthContext: Setting user:", serverUser);
           setUser(serverUser);
+          localStorage.setItem("token", JSON.stringify(response.data.token));
           localStorage.setItem("userData", JSON.stringify(response.data.user)); // Persisting user
         } else {
           console.log("AuthContext: No user found, clearing state.");
@@ -77,6 +77,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         console.log("Setting user data:", userData);
         setUser(userData);
         localStorage.setItem("userData", JSON.stringify(userData));
+        localStorage.setItem("token", JSON.stringify(response.data.token));
         return { success: true, user: userData };
       } else {
         return {

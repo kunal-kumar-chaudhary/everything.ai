@@ -1,17 +1,23 @@
-import { MessageCircle, PlusCircle } from 'lucide-react'
-import Link from "next/link"
-import React from 'react'
-import { Button } from '../ui/button'
-import { cn } from '@/lib/utils'
+import { MessageCircle, PlusCircle } from "lucide-react";
+import Link from "next/link";
+import React from "react";
+import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 interface Chat {
-  id: number;
+  id: string;
   title: string;
   lastMessage: string;
   updatedAt: string;
 }
 
-const ChatSidebar = ({chats, chatId}: {chats: Chat[], chatId: number}) => {
+const ChatSidebar = ({
+  chats,
+  chatId,
+}: {
+  chats: Chat[];
+  chatId: string | null;
+}) => {
   return (
     <div className="w-full h-screen p-4 text-gray-200 bg-gray-900">
       <Link href="/chat/temp">
@@ -22,21 +28,27 @@ const ChatSidebar = ({chats, chatId}: {chats: Chat[], chatId: number}) => {
       </Link>
 
       <div className="flex flex-col gap-2 mt-4">
-        {chats.map((chat) => (
-          <Link href={`/chat/${chat.id}`}>
-            <div
-              className={cn("rounded-lg p-3 text-slate-300 flex items-center", {
-                "bg-blue-600 text-white": chat.id === chatId,
-                "hover:text-white": chat.id !== chatId,
-              })}
-            >
-              <MessageCircle className="mr-2" />
-              <p className="w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis">
-                {"hehehehe"}
-              </p>
-            </div>
-          </Link>
-        ))}
+        {chats.map((chat) => {
+          console.log("Chat ID in sidebar:", chat.id); // Debug log
+          return (
+            <Link key={chat.id} href={`/chat/${chat.id}`}>
+              <div
+                className={cn(
+                  "rounded-lg p-3 text-slate-300 flex items-center",
+                  {
+                    "bg-blue-600 text-white": chat.id === chatId,
+                    "hover:text-white": chat.id !== chatId,
+                  }
+                )}
+              >
+                <MessageCircle className="mr-2" />
+                <p className="w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis">
+                  {chat.title}
+                </p>
+              </div>
+            </Link>
+          );
+        })}
       </div>
 
       <div className="absolute bottom-4 left-4 ">
@@ -47,7 +59,7 @@ const ChatSidebar = ({chats, chatId}: {chats: Chat[], chatId: number}) => {
         <button>subscription</button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ChatSidebar;

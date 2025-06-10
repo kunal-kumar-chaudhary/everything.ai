@@ -11,29 +11,30 @@ export async function patch(request: Request) {
   const url = new URL(request.url);
   const chatId = url.pathname.split("/")[3];
 
-  try{
-const chat = await ChatModel.findByIdAndUpdate(
-    { chatId },
-    { title: title },
-    { new: true }
-  );
-  return Response.json(
-    {
-      success: true,
-      payload: chat?.title,
-    },
-    {
-      status: 200,
-    }
-  );
-  }
-  catch(err){
-    return Response.json({
+  try {
+    const chat = await ChatModel.findByIdAndUpdate(
+      { chatId },
+      { title: title },
+      { new: true }
+    );
+    return Response.json(
+      {
+        success: true,
+        payload: chat?.title,
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (err) {
+    return Response.json(
+      {
         success: false,
-        message: "error updating title for selected chat"
-    },
-{
-    status: 500
-})
+        message: "error updating title for selected chat",
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }

@@ -9,25 +9,20 @@ export async function GET(request: Request) {
   const chatId = url.pathname.split("/")[3];
 
   // getting all the messages
-  try{
-const messages = await MessageModel.find({ chatId: chatId });
-  return Response.json(
-    {
-      success: true,
+  try {
+    const messages = await MessageModel.find({ chatId: chatId });
+    return Response.json({
       payload: messages,
-    },
-    {
-      status: 200,
-    }
-  );
+    });
+  } catch (err) {
+    return Response.json(
+      {
+        success: false,
+        message: "error retreving messages",
+      },
+      {
+        status: 500,
+      }
+    );
   }
-  catch(err){
-return Response.json({
-    success: false,
-    message: "error retreving messages"
-},{
-    status: 500
-})
-  }
-  
 }

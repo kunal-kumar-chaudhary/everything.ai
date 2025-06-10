@@ -24,6 +24,7 @@ export async function GET(request: Request) {
   // fetching all the chats for user
   const chats = await ChatModel.find({ userId }).populate("lastMessage");
   const payload = chats.map((chat) => ({
+    id: chat.id,
     title: chat.title,
     userId: chat.userId,
     lastMessage: chat.lastMessage,

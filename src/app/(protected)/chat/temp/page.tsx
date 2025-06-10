@@ -1,7 +1,7 @@
 "use client";
 import ChatComponent from '@/components/chat/chat-component';
 import ChatSidebar from '@/components/chat/chat-sidebar';
-import React, { useState } from 'react'
+import React from 'react'
 
 // here the user will be redirected after clicking on "new chat" button
 const TempChatPage = () => {
@@ -11,11 +11,11 @@ const TempChatPage = () => {
       <div className="flex w-full max-h-screen overflow-scroll">
         {/* chat sidebar */}
         <div className="flex-[1] max-w-xs">
-          <ChatSidebar chats={[]} chatId={NaN} />
+          <ChatSidebar chats={[]} chatId={null} />
         </div>
         {/* chat component */}
         <div className="flex-[3] border-l-4 border-l-slate-200">
-          <ChatComponent selectedChatId={NaN} />
+          <ChatComponent selectedChatId={null} />
         </div>
       </div>
     </div>
