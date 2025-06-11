@@ -93,7 +93,6 @@ export async function POST(request: Request) {
         }
       },
     });
-    console.log("point 4");
     // Create a Response with custom headers and the stream body
     const stream = result.toDataStream();
     

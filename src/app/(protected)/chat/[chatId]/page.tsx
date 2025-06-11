@@ -5,7 +5,7 @@ import ChatSidebar from "@/components/chat/chat-sidebar";
 import axios from "axios";
 import React, { use, useEffect, useState } from "react";
 
-const page = ({ params }: { params: Promise<{ chatId: string }> }) => {
+const Page = ({ params }: { params: Promise<{ chatId: string }> }) => {
   const { chatId } = use(params);
   const { user } = useAuth();
   const [chats, setChats] = useState([]);
@@ -44,4 +44,4 @@ const page = ({ params }: { params: Promise<{ chatId: string }> }) => {
   );
 };
 
-export default page;
+export default Page;
